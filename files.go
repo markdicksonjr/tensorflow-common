@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/pkg/errors"
+	tf "github.com/tensorflow/tensorflow/tensorflow/go"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -132,4 +133,20 @@ func GetFilenameFromUrl(baseModelUrl string) (string, error) {
 	}
 	baseModelUrlParts := strings.Split(baseModelUrlParsed.Path, "/")
 	return baseModelUrlParts[len(baseModelUrlParts)-1], nil
+}
+
+// GraphFromFile reads the contents of a file and attempts to treat it as serialized
+// graph data.  This is an easy way to get Tensorflow pb files into graphs
+func GraphFromFile(pbFile string) (*tf.Graph, error) {
+	modelFileContents, err := ioutil.ReadFile(pbFile)
+	if err != nil {
+		return nil, err
+	}
+
+	graph := tf.NewGraph()
+	if err := graph.Import(modelFileContents, ""); err != nil {
+		return graph, err
+	}
+
+	return graph, nil
 }
