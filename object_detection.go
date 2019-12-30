@@ -22,6 +22,7 @@ type ObjectDetectionOperationMappings struct {
 	NumDetections    string
 }
 
+// RawSlicesToObjectDetectionResult will convert the slices that come from inference to more convenient results
 func RawSlicesToObjectDetectionResult(
 	probabilities []float32,
 	classes []float32,

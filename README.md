@@ -9,7 +9,7 @@ https://www.tensorflow.org/install/lang_go
 ## Sample
 
 ```go
-graph, err := tensorflow_playground.GraphFromFile(pbFilePath)
+graph, err := tensorflow_playground.LoadGraphFromFile(pbFilePath)
 if err != nil {
     log.Fatal(err)
 }
@@ -25,7 +25,7 @@ defer session.Close()
 // for multiple images, session.Run() can be called in a loop (and
 // concurrently). Alternatively, images can be batched since the model
 // accepts batches of image data as input.
-tensor, image, err := tensorflow_common.TensorFromImage(*imageFile)
+tensor, image, err := tensorflow_common.LoadTensorFromImageFile(imageFilePath)
 if err != nil {
     log.Fatal(err)
 }
@@ -35,10 +35,11 @@ if err != nil {
     log.Fatalf("error making prediction: %v", err)
 }
 
-labels, err := tensorflow_common.LoadLabelsOnePerLine(labelsFile)
+labels, err := tensorflow_common.LoadLabelsFileOnePerLine(labelsFilePath)
 if err != nil {
     log.Fatal(err)
 }
 
 results := tensorflow_common.RawSlicesToObjectDetectionResult(probabilities, classes, boxes, labels)
+finalResults := tensorflow_common.FilterByMinConfidence(results, 0.8)
 ```

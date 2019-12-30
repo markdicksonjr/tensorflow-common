@@ -13,8 +13,8 @@ import (
 	"strings"
 )
 
-// convert the image in filename to a Tensor suitable as input to the Inception model.
-func TensorFromImage(filename string) (*tf.Tensor, image.Image, error) {
+// LoadTensorFromImageFile converts the image in filename to a Tensor suitable as input to the Inception model.
+func LoadTensorFromImageFile(filename string) (*tf.Tensor, image.Image, error) {
 	bytesVal, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, nil, err
@@ -77,7 +77,7 @@ func TensorFromImage(filename string) (*tf.Tensor, image.Image, error) {
 	return normalized[0], nil, nil
 }
 
-// build a graph to decode bitmap input into the proper tensor shape
+// buildDecodeBitmapGraph builds a graph to decode bitmap input into the proper tensor shape
 // the object detection models take an input of [1,?,?,3]
 func buildDecodeBitmapGraph() (g *tf.Graph, input, output tf.Output, err error) {
 	s := op.NewScope()

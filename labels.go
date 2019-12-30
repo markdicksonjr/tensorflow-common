@@ -5,7 +5,8 @@ import (
 	"os"
 )
 
-func LoadLabelsOnePerLine(labelsFile string) ([]string, error) {
+// LoadLabelsFileOnePerLine loads labels from a file, such that they are ordered and each is on a line by itself
+func LoadLabelsFileOnePerLine(labelsFile string) ([]string, error) {
 	file, err := os.Open(labelsFile)
 	if err != nil {
 		return nil, err

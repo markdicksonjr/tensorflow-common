@@ -135,9 +135,9 @@ func GetFilenameFromUrl(baseModelUrl string) (string, error) {
 	return baseModelUrlParts[len(baseModelUrlParts)-1], nil
 }
 
-// GraphFromFile reads the contents of a file and attempts to treat it as serialized
+// LoadGraphFromFile reads the contents of a file and attempts to treat it as serialized
 // graph data.  This is an easy way to get Tensorflow pb files into graphs
-func GraphFromFile(pbFile string) (*tf.Graph, error) {
+func LoadGraphFromFile(pbFile string) (*tf.Graph, error) {
 	modelFileContents, err := ioutil.ReadFile(pbFile)
 	if err != nil {
 		return nil, err
