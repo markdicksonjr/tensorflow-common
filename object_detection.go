@@ -32,10 +32,15 @@ func RawSlicesToObjectDetectionResult(
 	var results []ObjectDetectionResult
 
 	for i, p := range probabilities {
+		labelIndex := int(classes[i])
+		if labelIndex > len(labels) {
+			labelIndex = 0
+		}
+
 		results = append(results, ObjectDetectionResult{
 			Probability: p,
 			Box:         boxes[i],
-			Label:       labels[int(classes[i])],
+			Label:       labels[labelIndex],
 			Class:       classes[i],
 			Index:       i,
 		})
