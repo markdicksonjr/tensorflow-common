@@ -43,3 +43,8 @@ if err != nil {
 results := tensorflow_common.RawSlicesToObjectDetectionResult(probabilities, classes, boxes, labels)
 finalResults := tensorflow_common.FilterByMinConfidence(results, 0.8)
 ```
+
+## Utilities
+
+Among other things, this repo can convert from Pascal VOC to CSV.  This is handy for using LabelImg and working toward a
+TFRecord for object detection.
